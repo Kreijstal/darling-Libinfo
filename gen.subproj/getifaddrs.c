@@ -91,15 +91,11 @@
 #define MEMORY_MIN 2048
 #define MEMORY_MAX 16777216
 
-extern void __simple_kprintf(const char* format, ...);
-#define darling_kprintf __simple_kprintf
-
 LIBINFO_EXPORT
 int
 getifaddrs(struct ifaddrs **pif)
 {
 	int icnt = 1;
-
 	int dcnt = 0;
 	int ncnt = 0;
 	struct ifaddrs *ifa, *ift;
@@ -180,10 +176,8 @@ getifaddrs(struct ifaddrs **pif)
 			header_size = sizeof(struct if_msghdr);
 		else if (rtm->rtm_type == RTM_NEWADDR)
 			header_size = sizeof(struct ifa_msghdr);
-		if (rtm->rtm_msglen < header_size || rtm->rtm_msglen > (size_t)(buf + needed - next)) {
-			darling_kprintf("getifaddrs: bad rtm_msglen=%u at offset %ld, stopping\n", rtm->rtm_msglen, (long)(next - buf));
+		if (rtm->rtm_msglen < header_size || rtm->rtm_msglen > (size_t)(buf + needed - next))
 			break;
-		}
 		if (rtm->rtm_version != RTM_VERSION)
 			continue;
 		switch (rtm->rtm_type) {
@@ -307,10 +301,8 @@ getifaddrs(struct ifaddrs **pif)
 			header_size = sizeof(struct if_msghdr);
 		else if (rtm->rtm_type == RTM_NEWADDR)
 			header_size = sizeof(struct ifa_msghdr);
-		if (rtm->rtm_msglen < header_size || rtm->rtm_msglen > (size_t)(buf + needed - next)) {
-			darling_kprintf("getifaddrs: bad rtm_msglen=%u at offset %ld, stopping\n", rtm->rtm_msglen, (long)(next - buf));
+		if (rtm->rtm_msglen < header_size || rtm->rtm_msglen > (size_t)(buf + needed - next))
 			break;
-		}
 		if (rtm->rtm_version != RTM_VERSION)
 			continue;
 		switch (rtm->rtm_type) {
